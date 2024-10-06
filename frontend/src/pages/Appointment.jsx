@@ -6,7 +6,7 @@ import { assets } from "../assets/assets_frontend/assets";
 const Appointment = () => {
   const [docInfo, setDocInfo] = useState(null);
   const { docId } = useParams();
-  const { doctors } = useContext(AppContext);
+  const { doctors, currencySymbol } = useContext(AppContext);
 
   // console.log(docId);
 
@@ -55,8 +55,11 @@ const Appointment = () => {
                 {docInfo.about}
               </p>
             </div>
-            <p className="">
-              Appointment Fee: <span className="">{docInfo.fees}</span>
+            <p className="text-gray-500 font-medium mt-4">
+              Appointment Fee:
+              <span className="text-gray-600">
+                {currencySymbol}{docInfo.fees}
+              </span>
             </p>
           </div>
         </div>
