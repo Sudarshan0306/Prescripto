@@ -131,7 +131,7 @@ const Appointment = () => {
         {/*------Booking slots -----------*/}
         <div className="sm:ml-72 sm:pl-4 mt-4 font-medium text-gray-700">
           <p>Booking Slots</p>
-
+          
           <div className="flex gap-3 items-center w-full overflow-x-scroll mt-4">
             {docSlots.length &&
               docSlots.map((item, index) => (
