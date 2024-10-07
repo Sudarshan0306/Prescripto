@@ -81,7 +81,7 @@ const Appointment = () => {
   }, [docInfo]);
 
   useEffect(() => {
-    // console.log(docSlots);
+    console.log(docSlots);
   }, [docSlots]);
 
   return (
@@ -131,6 +131,7 @@ const Appointment = () => {
         {/*------Booking slots -----------*/}
         <div className="sm:ml-72 sm:pl-4 mt-4 font-medium text-gray-700">
           <p>Booking Slots</p>
+
           <div className="flex gap-3 items-center w-full overflow-x-scroll mt-4">
             {docSlots.length &&
               docSlots.map((item, index) => (
@@ -143,11 +144,12 @@ const Appointment = () => {
                       : "border border-gray-200"
                   }`}
                 >
-                  <p>{item[0] && daysOfWeek[item[0].dateTime.getDay()]} </p>
+                  <p>{item[0]  && daysOfWeek[item[0].dateTime.getDay()]} </p>
                   <p>{item[0] && item[0].dateTime.getDate()}</p>
                 </div>
               ))}
           </div>
+
           <div className="flex items-center gap-3 w-full overflow-x-scroll mt-3">
             {docSlots.length &&
               docSlots[slotIndex].map((item, index) => (
