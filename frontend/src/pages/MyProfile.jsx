@@ -37,12 +37,12 @@ const MyProfile = () => {
   };
 
   const handleEditTrue = () => {
-    setIsEdit(true)
-  }
+    setIsEdit(true);
+  };
   const handleEditFalse = () => {
-    setIsEdit(false)
-  }
- 
+    setIsEdit(false);
+  };
+
   return (
     <div>
       <img src={assets.profile_pic} alt="" />
@@ -125,7 +125,11 @@ const MyProfile = () => {
       </div>
 
       <div className="">
-        {isEdit ? <button onClick={handleEditFalse}>Save Information</button> : <button onClick={handleEditTrue}>Edit</button>}
+        {isEdit ? (
+          <button onClick={handleEditFalse}>Save Information</button>
+        ) : (
+          <button onClick={handleEditTrue}>Edit</button>
+        )}
       </div>
     </div>
   );
