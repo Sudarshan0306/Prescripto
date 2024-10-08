@@ -20,10 +20,10 @@ const Login = () => {
     let name = e.target.name;
     let value = e.target.value;
 
-    setData({
-      ...data,
+    setData((prevData) => ({
+      ...prevData,
       [name]: value,
-    });
+    }));
   };
 
   const submitHandler = (e) => {
