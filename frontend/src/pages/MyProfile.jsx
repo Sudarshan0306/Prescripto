@@ -11,9 +11,10 @@ const MyProfile = () => {
       line1: "57th Cross, Richmond",
       line2: "Circle, Church Road, London",
     },
-    gender: "Male",
-    dob: "20 July, 2024",
+    gender: "Female",
+    dob: "2000-01-20",
   });
+  const [isEdit, setIsEdit] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,7 +36,13 @@ const MyProfile = () => {
     }
   };
 
-  const [isEdit, setIsEdit] = useState(true);
+  const handleEditTrue = () => {
+    setIsEdit(true)
+  }
+  const handleEditFalse = () => {
+    setIsEdit(false)
+  }
+ 
   return (
     <div>
       <img src={assets.profile_pic} alt="" />
@@ -89,6 +96,36 @@ const MyProfile = () => {
             </p>
           )}
         </div>
+      </div>
+
+      <div className="">
+        <p>Basic Information</p>
+        <div className="">
+          <p>Gender</p>
+          {isEdit ? (
+            <select name="gender" id="" value={userData.gender}>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+          ) : (
+            <p>{userData.gender} </p>
+          )}
+          <p>Birthday:</p>
+          {isEdit ? (
+            <input
+              name="dob"
+              type="date"
+              onChange={handleChange}
+              value={userData.dob}
+            />
+          ) : (
+            <p>{userData.dob} </p>
+          )}
+        </div>
+      </div>
+
+      <div className="">
+        {isEdit ? <button onClick={handleEditFalse}>Save Information</button> : <button onClick={handleEditTrue}>Edit</button>}
       </div>
     </div>
   );
