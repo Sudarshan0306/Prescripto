@@ -4,6 +4,7 @@ import { AppContext } from "../context/AppContext.jsx";
 
 const Doctors = () => {
   const [filterDoc, setFilterDoc] = useState([]);
+  const [showFilter, setShowFilter] = useState(false);
   const { speciality } = useParams();
   const navigate = useNavigate();
   // console.log(speciality);
@@ -17,6 +18,10 @@ const Doctors = () => {
     }
   };
 
+  const handleShowFilter = () => {
+    setShowFilter((prev) => !prev);
+  };
+
   useEffect(() => {
     applyFilter();
   }, [doctors, speciality]);
@@ -25,7 +30,19 @@ const Doctors = () => {
     <div>
       <p className="text-gray-600">Browse through the doctors specialist.</p>
       <div className="flex flex-col sm:flex-row items-start gap-5 mt-5">
-        <div className="flex flex-col gap-4 text-sm text-gray-600">
+        <button
+          className={`py-1 px-3 border rounded text-sm transition-all sm:hidden ${
+            showFilter ? "bg-primary text-white" : ""
+          }`}
+          onClick={handleShowFilter}
+        >
+          Filters
+        </button>
+        <div
+          className={`flex flex-col gap-4 text-sm text-gray-600 ${
+            showFilter ? "flex" : "hidden sm:flex"
+          }`}
+        >
           <p
             onClick={() => {
               speciality === "General physician"
@@ -33,7 +50,9 @@ const Doctors = () => {
                 : navigate("/doctors/General physician");
             }}
             className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${
-              speciality === "General physician" ? "bg-indigo-100 text-black" : ""
+              speciality === "General physician"
+                ? "bg-indigo-100 text-black"
+                : ""
             }`}
           >
             General physician
@@ -93,7 +112,9 @@ const Doctors = () => {
                 : navigate("/doctors/Gastroenterologist");
             }}
             className={`w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ${
-              speciality === "Gastroenterologist" ? "bg-indigo-100 text-black" : ""
+              speciality === "Gastroenterologist"
+                ? "bg-indigo-100 text-black"
+                : ""
             }`}
           >
             Gastroenterologist
