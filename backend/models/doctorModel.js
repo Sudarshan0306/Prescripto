@@ -17,6 +17,7 @@ const doctorSchema = new Schema(
     slots_booked: { type: Object, default: {} },
   },
   { minimize: false }
+  
 );
 
 const doctorModel =
