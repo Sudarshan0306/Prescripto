@@ -89,4 +89,15 @@ const addDoctor = async (req, res) => {
   }
 };
 
-export { addDoctor };
+// API for admin login
+
+const loginAdmin = async (req, res) => {
+  try {
+    
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};
+
+export { addDoctor, loginAdmin };
