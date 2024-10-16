@@ -5,7 +5,7 @@ export const AdminContext = createContext();
 const AdminContextProvider = ({ children }) => {
   const value = {};
 
-  return <AdminContextProvider value={value}>{children}</AdminContextProvider>;
+  return <AdminContext.Provider value={value}>{children}</AdminContext.Provider>;
 };
 
 export default AdminContextProvider;
