@@ -1,6 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import { assets } from "../../assets/assets_admin/assets";
 const AddDoctor = () => {
+  const [docImg, setDocImg] = useState(false);
+  const [doctorData, setDoctorData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    experience: "",
+    fees: "",
+    about: "",
+    speciality: "",
+    education: "",
+    address1: "",
+    address2: "",
+  });
+
+  const handleDataChange = (e) => {
+    let name = e.target.name;
+    let value = e.target.value;
+
+    setDoctorData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(doctorData);
+  }
+
   return (
     <form className="m-5 w-full">
       <p className="mb-3 text-lg font-medium">Add Doctor</p>
@@ -26,10 +55,12 @@ const AddDoctor = () => {
               <input
                 className="border rounded py-2 px-3"
                 type="text"
-                name=""
+                name="name"
                 id=""
                 placeholder="name"
                 required
+                value={doctorData.name}
+                onChange={handleDataChange}
               />
             </div>
 
@@ -38,7 +69,7 @@ const AddDoctor = () => {
               <input
                 className="border rounded py-2 px-3"
                 type="email"
-                name=""
+                name="email"
                 id=""
                 placeholder="email"
                 required
@@ -50,7 +81,7 @@ const AddDoctor = () => {
               <input
                 className="border rounded py-2 px-3"
                 type="password"
-                name=""
+                name="password"
                 id=""
                 placeholder="password"
                 required
@@ -59,7 +90,11 @@ const AddDoctor = () => {
 
             <div className="flex-1 flex flex-col gap-1">
               <p>Experience</p>
-              <select className="border rounded py-2 px-3" name="" id="">
+              <select
+                className="border rounded py-2 px-3"
+                name="experience"
+                id=""
+              >
                 <option value="1">1 Year</option>
                 <option value="2">2 Years</option>
                 <option value="3">3 Years</option>
@@ -78,7 +113,7 @@ const AddDoctor = () => {
               <input
                 className="border rounded py-2 px-3"
                 type="number"
-                name=""
+                name="fees"
                 id=""
                 placeholder="fees"
                 required
@@ -89,7 +124,11 @@ const AddDoctor = () => {
           <div className="w-full lg:flex-1 flex flex-col gap-4">
             <div className="flex-1 flex flex-col gap-1">
               <p>Speciality</p>
-              <select className="border rounded py-2 px-3" name="" id="">
+              <select
+                className="border rounded py-2 px-3"
+                name="speciality"
+                id=""
+              >
                 <option value="General physician">General physician</option>
                 <option value="Gynecologist">Gynecologist</option>
                 <option value="Dermatologist3">Dermatologist</option>
@@ -104,7 +143,7 @@ const AddDoctor = () => {
               <input
                 className="border rounded py-2 px-3"
                 type="text"
-                name=""
+                name="education"
                 id=""
                 placeholder="Education"
                 required
@@ -116,7 +155,7 @@ const AddDoctor = () => {
               <input
                 className="border rounded py-2 px-3"
                 type="text"
-                name=""
+                name="address1"
                 id=""
                 placeholder="Address 1"
                 required
@@ -124,7 +163,7 @@ const AddDoctor = () => {
               <input
                 className="border rounded py-2 px-3"
                 type="text"
-                name=""
+                name="address2"
                 id=""
                 placeholder="Address 2"
                 required
@@ -145,7 +184,7 @@ const AddDoctor = () => {
           />
         </div>
 
-        <button className="bg-primary px-10 py-3 mt-4 text-white rounded-full">
+        <button onClick={handleSubmit} className="bg-primary px-10 py-3 mt-4 text-white rounded-full">
           Add Doctor
         </button>
       </div>
