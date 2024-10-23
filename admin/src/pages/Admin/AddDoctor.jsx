@@ -69,11 +69,27 @@ const AddDoctor = () => {
         }
       );
       if (data.success) {
-        toast.success(data.message)
+        toast.success(data.message);
+        setDoctorData({
+          name: "",
+          email: "",
+          password: "",
+          experience: "1 Year",
+          fees: "",
+          about: "",
+          speciality: "General physician",
+          degree: "",
+          address1: "",
+          address2: "",
+        })
       } else {
         toast.error(data.message)
       }
-    } catch (error) {}
+    } catch (error) {
+      toast.error(error.message)
+      console.log(error);
+      
+    }
   };
 
   return (
