@@ -2,8 +2,7 @@ import validator from "validator";
 import bcrypt from "bcrypt";
 import { v2 as cloudinary } from "cloudinary";
 import doctorModel from "../models/doctorModel.js";
-import jwt from 'jsonwebtoken';
-
+import jwt from "jsonwebtoken";
 
 //API for adding doctor
 
@@ -100,8 +99,8 @@ const loginAdmin = async (req, res) => {
       email === process.env.ADMIN_EMAIL &&
       password === process.env.ADMIN_PASSWORD
     ) {
-      const token = jwt.sign(email+password, process.env.JWT_SECRET);
-      res.json({success:true, token})
+      const token = jwt.sign(email + password, process.env.JWT_SECRET);
+      res.json({ success: true, token });
     } else {
       res.json({ success: false, message: "Invalid Credentials" });
     }
@@ -111,4 +110,14 @@ const loginAdmin = async (req, res) => {
   }
 };
 
-export { addDoctor, loginAdmin };
+const allDoctors = async (req, res) => {
+  try {
+    const doctors = await doctorModel.find({}).select("-password");
+    res.json({ success: true, doctors });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};
+
+export { addDoctor, loginAdmin, allDoctors };
