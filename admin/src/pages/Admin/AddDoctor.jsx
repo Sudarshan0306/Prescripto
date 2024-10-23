@@ -1,8 +1,10 @@
 import React, { useContext, useState } from "react";
+import axios from "axios";
 import { assets } from "../../assets/assets_admin/assets";
 import { AdminContext } from "../../context/AdminContext";
 import { toast } from "react-toastify";
 import Input from "../../components/UI/Input";
+
 const AddDoctor = () => {
   const [docImg, setDocImg] = useState(false);
   const [doctorData, setDoctorData] = useState({
@@ -13,7 +15,7 @@ const AddDoctor = () => {
     fees: "",
     about: "",
     speciality: "General physician",
-    education: "",
+    degree: "",
     address1: "",
     address2: "",
   });
@@ -30,15 +32,46 @@ const AddDoctor = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(doctorData);
-    
     try {
-      if (condition) {
-        if (!docImg) {
-          return toast.error("Image not selected");
+      if (!docImg) {
+        return toast.error("Image not selected");
+      }
+      const formData = new FormData();
+      formData.append("image", docImg);
+      formData.append("name", doctorData.name);
+      formData.append("email", doctorData.email);
+      formData.append("password", doctorData.password);
+      formData.append("experience", doctorData.experience);
+      formData.append("fees", doctorData.fees);
+      formData.append("about", doctorData.about);
+      formData.append("speciality", doctorData.speciality);
+      formData.append("degree", doctorData.degree);
+      formData.append(
+        "address",
+        JSON.stringify({
+          line1: doctorData.address1,
+          line2: doctorData.address2,
+        })
+      );
+
+      //consol log form data
+      formData.forEach((value, key) => {
+        console.log(`${key}: ${value}`);
+      });
+
+      const {data} = await axios.post(
+        backendUrl + "/api/admin/add-doctor",
+        formData,
+        {
+          headers: { aToken },
         }
+      );
+      if (data.success) {
+        toast.success(data.message)
+      } else {
+        toast.error(data.message)
       }
     } catch (error) {}
   };
@@ -55,7 +88,13 @@ const AddDoctor = () => {
               alt=""
             />
           </label>
-          <input onChange={(e)=> setDocImg(e.target.files[0])} type="file" name="" id="doc-img" hidden />
+          <input
+            onChange={(e) => setDocImg(e.target.files[0])}
+            type="file"
+            name=""
+            id="doc-img"
+            hidden
+          />
           <p>
             Upload doctor <br /> picture
           </p>
@@ -63,47 +102,41 @@ const AddDoctor = () => {
 
         <div className="flex flex-col lg:flex-row items-start gap-10 text-gray-600">
           <div className="w-full lg:flex-1 flex flex-col gap-4">
-          <div className="flex-1 flex flex-col gap-1">
-              <p>Doctor Name</p>
-              <input
-                className="border rounded py-2 px-3"
-                type="name"
-                name="name"
-                id="doctor-name"
-                placeholder="Name"
-                required
-                onChange={handleDataChange}
-                value={doctorData.name}
-              />
-            </div>
+            <Input
+              label="Doctor Name"
+              className="border rounded py-2 px-3"
+              type="name"
+              name="name"
+              id="doctor-name"
+              placeholder="Name"
+              required
+              onChange={handleDataChange}
+              value={doctorData.name}
+            />
 
-            <div className="flex-1 flex flex-col gap-1">
-              <p>Doctor Email</p>
-              <input
-                className="border rounded py-2 px-3"
-                type="email"
-                name="email"
-                id="doctor-email"
-                placeholder="email"
-                required
-                onChange={handleDataChange}
-                value={doctorData.email}
-              />
-            </div>
+            <Input
+              label="Doctor Email"
+              className="border rounded py-2 px-3"
+              type="email"
+              name="email"
+              id="doctor-email"
+              placeholder="email"
+              required
+              onChange={handleDataChange}
+              value={doctorData.email}
+            />
 
-            <div className="flex-1 flex flex-col gap-1">
-              <p>Doctor Password</p>
-              <input
-                className="border rounded py-2 px-3"
-                type="password"
-                name="password"
-                id="doctor-password"
-                placeholder="password"
-                required
-                value={doctorData.password}
-                onChange={handleDataChange}
-              />
-            </div>
+            <Input
+              label="Doctor Password"
+              className="border rounded py-2 px-3"
+              type="password"
+              name="password"
+              id="doctor-password"
+              placeholder="password"
+              required
+              onChange={handleDataChange}
+              value={doctorData.password}
+            />
 
             <div className="flex-1 flex flex-col gap-1">
               <p>Experience</p>
@@ -127,19 +160,17 @@ const AddDoctor = () => {
               </select>
             </div>
 
-            <div className="flex-1 flex flex-col gap-1">
-              <p>Fees</p>
-              <input
-                className="border rounded py-2 px-3"
-                type="number"
-                name="fees"
-                id="doctor-fees"
-                placeholder="fees"
-                required
-                value={doctorData.fees}
-                onChange={handleDataChange}
-              />
-            </div>
+            <Input
+              label="Fees"
+              className="border rounded py-2 px-3"
+              type="number"
+              name="fees"
+              id="doctor-fees"
+              placeholder="fees"
+              required
+              onChange={handleDataChange}
+              value={doctorData.fees}
+            />
           </div>
 
           <div className="w-full lg:flex-1 flex flex-col gap-4">
@@ -161,43 +192,39 @@ const AddDoctor = () => {
               </select>
             </div>
 
-            <div className="flex-1 flex flex-col gap-1">
-              <p>Education</p>
-              <input
-                className="border rounded py-2 px-3"
-                type="text"
-                name="education"
-                id="doctor-education"
-                placeholder="Education"
-                required
-                onChange={handleDataChange}
-                value={doctorData.education}
-              />
-            </div>
+            <Input
+              label="Education"
+              className="border rounded py-2 px-3"
+              type="text"
+              name="degree"
+              id="doctor-degree"
+              placeholder="degree"
+              required
+              onChange={handleDataChange}
+              value={doctorData.degree}
+            />
 
-            <div className="flex-1 flex flex-col gap-1">
-              <p>Address</p>
-              <input
-                className="border rounded py-2 px-3"
-                type="text"
-                name="address1"
-                id="doctor-address1"
-                placeholder="Address 1"
-                required
-                onChange={handleDataChange}
-                value={doctorData.address1}
-              />
-              <input
-                className="border rounded py-2 px-3"
-                type="text"
-                name="address2"
-                id="doctor-address2"
-                placeholder="Address 2"
-                required
-                value={doctorData.address2}
-                onChange={handleDataChange}
-              />
-            </div>
+            <Input
+              label="Address"
+              className="border rounded py-2 px-3"
+              type="text"
+              name="address1"
+              id="doctor-address1"
+              placeholder="address1"
+              required
+              onChange={handleDataChange}
+              value={doctorData.address1}
+            />
+            <Input
+              className="border rounded py-2 px-3"
+              type="text"
+              name="address2"
+              id="doctor-address2"
+              placeholder="address2"
+              required
+              onChange={handleDataChange}
+              value={doctorData.address2}
+            />
           </div>
         </div>
 
