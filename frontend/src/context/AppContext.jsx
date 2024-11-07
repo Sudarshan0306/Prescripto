@@ -6,6 +6,9 @@ export const AppContext = createContext();
 
 const AppContextProvider = ({ children }) => {
   const [doctors, setDoctors] = useState([]);
+  const [token, setToken] = useState(
+    localStorage.getItem("token") ? localStorage.getItem("token") : false
+  );
 
   const currencySymbol = "$";
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
@@ -13,6 +16,9 @@ const AppContextProvider = ({ children }) => {
   const AppCtx = {
     doctors: doctors,
     currencySymbol,
+    token,
+    setToken,
+    backendUrl,
   };
 
   const getDoctorsData = async () => {
