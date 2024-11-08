@@ -1,19 +1,8 @@
-import React, { useState } from "react";
-import { assets } from "../assets/assets_frontend/assets";
+import React, { useContext, useState } from "react";
+import { AppContext } from "../context/AppContext";
 
 const MyProfile = () => {
-  const [userData, setUserData] = useState({
-    name: "Edward Vincent",
-    image: "../assets/assets_frontend/assets",
-    email: "richardjameswap@gmail.com",
-    phone: "+1  123 456 7890",
-    address: {
-      line1: "57th Cross, Richmond",
-      line2: "Circle, Church Road, London",
-    },
-    gender: "Female",
-    dob: "2000-01-20",
-  });
+  const {userData, setUserData, loadUserProfileData} = useContext(AppContext);
   const [isEdit, setIsEdit] = useState(false);
 
   const handleChange = (e) => {
@@ -43,9 +32,9 @@ const MyProfile = () => {
     setIsEdit(false);
   };
 
-  return (
+  return userData && (
     <div className="max-w-lg flex flex-col gap-2 text-sm">
-      <img className="w-36 rounded" src={assets.profile_pic} alt="" />
+      <img className="w-36 rounded" src={userData.image} alt="" />
       {isEdit ? (
         <input
           className="font-medium bg-gray-100 text-3xl max-w-60 mt-4 rounded-mg"
