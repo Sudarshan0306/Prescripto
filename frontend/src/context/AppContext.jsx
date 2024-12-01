@@ -53,7 +53,7 @@ const AppContextProvider = ({ children }) => {
   }, [token]);
 
   const AppCtx = {
-    doctors: doctors,
+    doctors,
     currencySymbol,
     token,
     setToken,
@@ -61,6 +61,7 @@ const AppContextProvider = ({ children }) => {
     userData,
     setUserData,
     loadUserProfileData,
+    getDoctorsData,
   };
 
   return <AppContext.Provider value={AppCtx}>{children}</AppContext.Provider>;

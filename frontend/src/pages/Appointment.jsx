@@ -7,7 +7,8 @@ import RelatedDoctors from "../Components/RelatedDoctors";
 const Appointment = () => {
   const [docInfo, setDocInfo] = useState(null);
   const { docId } = useParams();
-  const { doctors, currencySymbol } = useContext(AppContext);
+  const { doctors, currencySymbol, token, backendUrl, getDoctorsData } =
+    useContext(AppContext);
   const daysOfWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
   const [docSlots, setDocSlots] = useState([]);
@@ -131,7 +132,7 @@ const Appointment = () => {
         {/*------Booking slots -----------*/}
         <div className="sm:ml-72 sm:pl-4 mt-4 font-medium text-gray-700">
           <p>Booking Slots</p>
-          
+
           <div className="flex gap-3 items-center w-full overflow-x-scroll mt-4">
             {docSlots.length &&
               docSlots.map((item, index) => (
@@ -144,7 +145,7 @@ const Appointment = () => {
                       : "border border-gray-200"
                   }`}
                 >
-                  <p>{item[0]  && daysOfWeek[item[0].dateTime.getDay()]} </p>
+                  <p>{item[0] && daysOfWeek[item[0].dateTime.getDay()]} </p>
                   <p>{item[0] && item[0].dateTime.getDate()}</p>
                 </div>
               ))}
