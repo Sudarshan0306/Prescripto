@@ -6,15 +6,35 @@ import { toast } from "react-toastify";
 const MyAppointments = () => {
   const { backendUrl, token } = useContext(AppContext);
   const [appointments, setAppointments] = useState([]);
+
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const slottedFormat = (slotDate) => {
+    const dateArray = slotDate.split("_");
+    return (
+      dateArray[0] + " " + months[Number(dateArray[1]) - 1] + " " + dateArray[2]
+    );
+  };
   const getUserAppointments = async () => {
     try {
-      const {data} = await axios.get(backendUrl + "/api/user/appointments", {
+      const { data } = await axios.get(backendUrl + "/api/user/appointments", {
         headers: { token },
       });
       if (data.success) {
         setAppointments(data.appointments.reverse());
         console.log(data.appointments);
-        
       }
     } catch (error) {
       console.log(error);
@@ -39,19 +59,25 @@ const MyAppointments = () => {
             className="grid grid-cols-[1fr_2fr] gap-4 sm:flex sm:gap-6 py-2 border-b"
           >
             <div className="">
-              <img className="w-32 bg-indigo-50" src={item.docData.image} alt="" />
+              <img
+                className="w-32 bg-indigo-50"
+                src={item.docData.image}
+                alt=""
+              />
             </div>
             <div className="flex-1 text-sm text-zinc-600">
-              <p className="font-semibold text-neutral-800">{item.docData.name}</p>
+              <p className="font-semibold text-neutral-800">
+                {item.docData.name}
+              </p>
               <p>{item.docData.speciality}</p>
               <p className="text-zinc-700 font-medium mt-1">Address:</p>
               <p className="text-xs">{item.docData.address.line1}</p>
               <p className="text-xs">{item.docData.address.line2}</p>
               <p className="text-xs mt-1">
                 <span className="text-sm text-neutral-700 font-medium">
-                  Date & Time: 
+                  Date & Time:
                 </span>
-                &nbsp;&nbsp;{item.slotDate.replace(/_/g, "-")} | {item.slotTime}
+                &nbsp;&nbsp;{slottedFormat(item.slotDate)} | {item.slotTime}
               </p>
             </div>
             <div className=""></div>
